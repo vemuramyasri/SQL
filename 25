@@ -1,0 +1,13 @@
+SELECT N,
+    CASE 
+        /* If the parent is NULL, it's the top of the tree */
+        WHEN P IS NULL THEN 'Root'
+        
+        /* If the node N exists in the P column, it means it has children */
+        WHEN N IN (SELECT DISTINCT P FROM BST WHERE P IS NOT NULL) THEN 'Inner'
+        
+        /* If it has a parent but no children, it's a leaf */
+        ELSE 'Leaf'
+    END
+FROM BST
+ORDER BY N;
