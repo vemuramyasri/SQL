@@ -1,0 +1,9 @@
+WITH SortedStation AS (
+    SELECT LAT_N, 
+           ROW_NUMBER() OVER(ORDER BY LAT_N) as RowNum,
+           COUNT(*) OVER() as TotalRows
+    FROM STATION
+)
+SELECT DECIMAL(LAT_N, 10, 4)
+FROM SortedStation
+WHERE RowNum = (TotalRows + 1) / 2;
